@@ -1,11 +1,32 @@
 const express = require('express')
 const app = express()
 const port = 3000
-const homeRoute = require("./routes/client")
+const homeRouter = require('./routes/home')
+const contactRouter = require('./routes/contact')
+const servicesRouter = require('./routes/services')
 
-app.use("/", homeRoute)
-app.use("/services", homeRoute)
-app.use("/contact", homeRoute)
+
+
+app.use('/home', homeRouter)
+app.use("/contact",contactRouter)
+app.use("/services",servicesRouter)
+
+
+app.set("view engine", "ejs")
+
+app.get("/", (req, res) => {
+  console.log("Home")
+  res.render("home", { text: "World"})
+})
+
+app.get("/services", (req, res) => {
+  res.render("services", { text: "services"})
+})
+
+app.get("/contact", (req, res) => {
+
+  res.render("contact", { text: "contact"})
+})
 
 
 app.listen(port, () => {
